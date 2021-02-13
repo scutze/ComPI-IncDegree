@@ -17,7 +17,6 @@ import java.util.Arrays;
 public class IncDegreeFactory extends GenericAugmentationFactory {
 
     World incWorld;
-    int mergePointIndex; // the index to the randvar in the center that connects new worlds
 
     public IncDegreeFactory(World baseWorld, World incWorld) {
         super(baseWorld);
