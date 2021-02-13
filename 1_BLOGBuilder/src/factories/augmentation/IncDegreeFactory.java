@@ -26,7 +26,6 @@ public class IncDegreeFactory extends GenericAugmentationFactory {
 
         // clone old world
         this.incWorld = cloner.deepClone(incWorld);
-        // this.mergePointIndex = mergePoint.getIndex();
     }
 
     @Override
