@@ -19,14 +19,14 @@ public class IncDegreeFactory extends GenericAugmentationFactory {
     World incWorld;
     int mergePointIndex; // the index to the randvar in the center that connects new worlds
 
-    public IncDegreeFactory(World baseWorld, World incWorld, RandVar mergePoint) {
+    public IncDegreeFactory(World baseWorld, World incWorld) {
         super(baseWorld);
 
         Cloner cloner = new Cloner();
 
         // clone old world
         this.incWorld = cloner.deepClone(incWorld);
-        this.mergePointIndex = mergePoint.getIndex();
+        // this.mergePointIndex = mergePoint.getIndex();
     }
 
     @Override
@@ -71,8 +71,8 @@ public class IncDegreeFactory extends GenericAugmentationFactory {
         }
 
         // Create connection factor between worlds
-        // connects mergePoint to random rv from new world
-        RandVar rndRandVarW1 = w1.getRandVars().get(mergePointIndex);
+        // connects first randvar of old world to random rv from new world
+        RandVar rndRandVarW1 = w1.getRandVars().get(0);
         RandVar rndRandVarW2 = w1.getRandVars().get(ConfigSingle.getInstance().getRandom().nextInt(w2.getRandVars().size()) + rvCountW1);
 
         Factor connectionFactor = new Factor(w1.getNextFactorIndex(), new ArrayList<RandVar>(Arrays.asList(rndRandVarW1, rndRandVarW2)));

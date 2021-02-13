@@ -20,7 +20,7 @@ public class IncDegreeStrategy extends WorldCreationStrategy {
 
 	boolean smallWorlds=true;
 	
-	int[] domainSizes = {10, 100};
+	int[] domainSizes = {10, 100, 1000};
 
 	boolean allQueries = true;
 
@@ -30,19 +30,18 @@ public class IncDegreeStrategy extends WorldCreationStrategy {
 
 	// Base World Config:
 	int logVarCount = smallWorlds ? 1 : 2;
-	int randVarCount = smallWorlds ? 2 : 4;
+	int randVarCount = 3;
 	int factorCount = smallWorlds ? 1 : 2;
 	int maxFacArgs = smallWorlds ? 2 : 3;
 	int maxRandVarOccurrences = 4;
 	int maxRandVarArgs = 2;
 
-	int incrementCount = 20;
+	int incrementCount = 10;
 
 	@Override
 	public void start() {
 
 		Cloner cloner = new Cloner();
-		RandVar mergePoint = null; // the randvar in the center
 
 		int globalFileCounter = 0;
 
@@ -55,17 +54,13 @@ public class IncDegreeStrategy extends WorldCreationStrategy {
 			ElementFactory baseFactory = new RandomSampleFactory();
 			bw.fillWorld(baseFactory, baseFactory, baseFactory);
 
-			// in the first run, get mergePoint randomly
-			if (mergePoint == null)
-				mergePoint = bw.getRandVars().get(ConfigSingle.getInstance().getRandom().nextInt(bw.getRandVars().size()));
-
 			World temp_w = null;
 			for (int i = 0; i < incrementCount; i++) {
 				if (i == 0) {
 					temp_w = cloner.deepClone(bw);
 				} else {
 					ConfigSingle.getInstance().getProgressLogger().logWorldStart(globalFileCounter);
-					ElementFactory augFac = new IncDegreeFactory(temp_w, bw, mergePoint);
+					ElementFactory augFac = new IncDegreeFactory(temp_w, bw);
 					SpecContainer sc_loc = new SpecContainer(domainSizes,
 							temp_w.getSpecContainer().getLogVarCount() + logVarCount,
 							temp_w.getSpecContainer().getRandVarCount() + randVarCount,
